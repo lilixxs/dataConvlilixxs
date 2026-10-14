@@ -1,0 +1,87 @@
+{
+  "lang": "en-US",
+  "pageTitle": "STM32 Data Type Converter",
+  "terminalTag": ">_ STM32 DATA CONVERTER",
+  "title": "STM32 Data Type Converter",
+  "subtitle": "Multi-endianness (ABCD / CDAB, etc.) & Dec/Hex/Bin conversion with byte-spaced display and space-free copy",
+  "toolbar": {
+    "radixGroupAria": "Output radix selection",
+    "radix10": "DEC",
+    "radix16": "HEX",
+    "radix2": "BIN",
+    "clearBtn": "Clear",
+    "helpBtn": "Manual",
+    "langGroupAria": "Interface language selection"
+  },
+  "tableHeader": {
+    "type": "Data Type",
+    "range": "Value Range",
+    "order": "Endianness",
+    "input": "Value Input / Display (Enter)",
+    "status": "Status"
+  },
+  "sections": {
+    "int": "INT · Signed Integer",
+    "uint": "UINT · Unsigned Integer",
+    "float": "FLOAT / DOUBLE · Floating-Point"
+  },
+  "types": {
+    "int8": "8-bit signed int",
+    "int16": "16-bit signed int",
+    "int32": "32-bit signed int",
+    "int64": "64-bit signed int",
+    "uint8": "8-bit unsigned int",
+    "uint16": "16-bit unsigned int",
+    "uint32": "32-bit unsigned int",
+    "uint64": "64-bit unsigned int",
+    "float": "Single-precision float",
+    "double": "Double-precision float"
+  },
+  "rangeTitles": {
+    "int32": "Exact range: -2,147,483,648 ~ 2,147,483,647",
+    "int64": "Exact range: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807",
+    "uint32": "Exact range: 0 ~ 4,294,967,295",
+    "uint64": "Exact range: 0 ~ 18,446,744,073,709,551,615",
+    "float": "Exact range: -3.4028235e+38 ~ 3.4028235e+38",
+    "double": "Exact range: -1.7976931348623157e+308 ~ 1.7976931348623157e+308"
+  },
+  "endianOptions": {
+    "A": "A (1-Byte)",
+    "AB": "AB (Big-Endian)",
+    "BA": "BA (Little-Endian)",
+    "ABCD": "ABCD (Big-Endian)",
+    "DCBA": "DCBA (Little-Endian)",
+    "BADC": "BADC (Byte Swap)",
+    "CDAB": "CDAB (Word Swap)",
+    "ABCDEFGH": "ABCDEFGH (Big-Endian)",
+    "HGFEDCBA": "HGFEDCBA (Little-Endian)",
+    "BADCFEHG": "BADCFEHG (Byte Swap)",
+    "GHEFCDAB": "GHEFCDAB (Word Swap)",
+    "EFGHABCD": "EFGHABCD (DWord Swap)"
+  },
+  "input": {
+    "placeholder": "Enter value & press Enter...",
+    "enterHintTitle": "Press Enter to convert",
+    "copyBtnTitle": "Copy value",
+    "orderAriaSuffix": "endianness",
+    "inputAriaSuffix": "value input"
+  },
+  "status": {
+    "outOfRange": "Out of range",
+    "ok": "Converted",
+    "errRange": "Error: {type} range is {range}"
+  },
+  "drawer": {
+    "tag": ">_ MANUAL & GUIDE",
+    "title": "User Manual & Conversion Guide",
+    "closeTitle": "Close (Esc)",
+    "closeAria": "Close manual",
+    "loading": "Loading manual..."
+  },
+  "footer": {
+    "authorLabel": "Author",
+    "authorName": "lilixxs",
+    "repoLabel": "GitHub Repository",
+    "copyright": "Copyright © 2026 lilixxs · Released under the MIT License"
+  }
+}

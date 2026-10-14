@@ -1,0 +1,87 @@
+{
+  "lang": "zh-CN",
+  "pageTitle": "STM32 数据类型转换器",
+  "terminalTag": ">_ STM32 DATA CONVERTER",
+  "title": "STM32 数据类型转换工具",
+  "subtitle": "支持多字节序（ABCD / CDAB 等）与 10/16/2 进制切换，16 进制与 2 进制按字节间隔显示且复制不含空格",
+  "toolbar": {
+    "radixGroupAria": "输出进制选择",
+    "radix10": "10进制",
+    "radix16": "十六进制",
+    "radix2": "二进制",
+    "clearBtn": "清空",
+    "helpBtn": "使用帮助",
+    "langGroupAria": "界面语言选择"
+  },
+  "tableHeader": {
+    "type": "数据类型",
+    "range": "数值范围",
+    "order": "字节序",
+    "input": "数值输入 / 显示 (Enter)",
+    "status": "状态提示"
+  },
+  "sections": {
+    "int": "INT · 有符号整型",
+    "uint": "UINT · 无符号整型",
+    "float": "FLOAT / DOUBLE · 浮点型"
+  },
+  "types": {
+    "int8": "8位有符号整型",
+    "int16": "16位有符号整型",
+    "int32": "32位有符号整型",
+    "int64": "64位有符号整型",
+    "uint8": "8位无符号整型",
+    "uint16": "16位无符号整型",
+    "uint32": "32位无符号整型",
+    "uint64": "64位无符号整型",
+    "float": "单精度浮点",
+    "double": "双精度浮点"
+  },
+  "rangeTitles": {
+    "int32": "精确范围: -2,147,483,648 ~ 2,147,483,647",
+    "int64": "精确范围: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807",
+    "uint32": "精确范围: 0 ~ 4,294,967,295",
+    "uint64": "精确范围: 0 ~ 18,446,744,073,709,551,615",
+    "float": "精确范围: -3.4028235e+38 ~ 3.4028235e+38",
+    "double": "精确范围: -1.7976931348623157e+308 ~ 1.7976931348623157e+308"
+  },
+  "endianOptions": {
+    "A": "A (单字节)",
+    "AB": "AB (大端)",
+    "BA": "BA (小端)",
+    "ABCD": "ABCD (大端)",
+    "DCBA": "DCBA (小端)",
+    "BADC": "BADC (字节交换)",
+    "CDAB": "CDAB (字交换)",
+    "ABCDEFGH": "ABCDEFGH (大端)",
+    "HGFEDCBA": "HGFEDCBA (小端)",
+    "BADCFEHG": "BADCFEHG (字节交换)",
+    "GHEFCDAB": "GHEFCDAB (字交换)",
+    "EFGHABCD": "EFGHABCD (双字交换)"
+  },
+  "input": {
+    "placeholder": "输入数值并按回车...",
+    "enterHintTitle": "按回车转换",
+    "copyBtnTitle": "复制数值",
+    "orderAriaSuffix": "字节序",
+    "inputAriaSuffix": "数值输入"
+  },
+  "status": {
+    "outOfRange": "超范围",
+    "ok": "转换完成",
+    "errRange": "错误：{type} 量程应为 {range}"
+  },
+  "drawer": {
+    "tag": ">_ MANUAL & GUIDE",
+    "title": "使用帮助与转换说明",
+    "closeTitle": "关闭 (Esc)",
+    "closeAria": "关闭帮助",
+    "loading": "正在加载帮助文档..."
+  },
+  "footer": {
+    "authorLabel": "作者",
+    "authorName": "lilixxs",
+    "repoLabel": "GitHub 项目主页",
+    "copyright": "Copyright © 2026 lilixxs · 基于 MIT 协议开源"
+  }
+}

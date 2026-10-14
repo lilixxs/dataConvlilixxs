@@ -98,13 +98,15 @@
       flex-wrap: wrap;
     }
 
-    .radix-group {
+    .radix-group,
+    .lang-group {
       display: inline-flex;
       border: 1px solid var(--border-strong);
       background: var(--bg-surface);
     }
 
-    .radix-btn {
+    .radix-btn,
+    .lang-btn {
       appearance: none;
       border: none;
       border-right: 1px solid var(--border-strong);
@@ -118,16 +120,25 @@
       transition: background-color 0.12s ease, color 0.12s ease;
     }
 
-    .radix-btn:last-child {
+    .lang-btn {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 7px 11px;
+    }
+
+    .radix-btn:last-child,
+    .lang-btn:last-child {
       border-right: none;
     }
 
-    .radix-btn:hover {
+    .radix-btn:hover,
+    .lang-btn:hover {
       background: var(--bg-subtle);
       color: var(--text-primary);
     }
 
-    .radix-btn.active {
+    .radix-btn.active,
+    .lang-btn.active {
       background: var(--accent-clay);
       color: #FFFFFF;
     }
@@ -461,6 +472,59 @@
       border-color: var(--accent-clay);
     }
 
+    .footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-soft);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .footer-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      padding: 3px 10px;
+      text-decoration: none;
+      transition: all 0.12s ease;
+    }
+
+    .footer-link:hover {
+      border-color: var(--accent-clay);
+      background: var(--accent-clay-tint);
+      color: var(--accent-clay-dark);
+    }
+
+    .footer-link svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .footer-copyright {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
     .drawer-backdrop {
       position: fixed;
       inset: 0;
@@ -709,6 +773,10 @@
         gap: 8px;
         padding: 14px 16px;
       }
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
@@ -716,38 +784,42 @@
   <div class="container">
     <header class="header">
       <div class="brand-group">
-        <span class="terminal-tag">&gt;_ STM32 DATA CONVERTER</span>
-        <h1 class="title">STM32 数据类型转换工具</h1>
-        <p class="subtitle">支持多字节序（ABCD / CDAB 等）与 10/16/2 进制切换，16 进制与 2 进制按字节间隔显示且复制不含空格</p>
+        <span class="terminal-tag" id="terminalTag">&gt;_ STM32 DATA CONVERTER</span>
+        <h1 class="title" id="pageTitleEl">STM32 数据类型转换工具</h1>
+        <p class="subtitle" id="pageSubtitleEl">支持多字节序（ABCD / CDAB 等）与 10/16/2 进制切换，16 进制与 2 进制按字节间隔显示且复制不含空格</p>
       </div>
       <div class="toolbar">
-        <div class="radix-group" role="group" aria-label="输出进制选择">
-          <button type="button" class="radix-btn active" data-radix="10">10进制</button>
-          <button type="button" class="radix-btn" data-radix="16">十六进制</button>
-          <button type="button" class="radix-btn" data-radix="2">二进制</button>
+        <div class="lang-group" id="langGroup" role="group" aria-label="界面语言选择">
+          <button type="button" class="lang-btn active" data-lang="zh-CN">中文</button>
+          <button type="button" class="lang-btn" data-lang="en-US">EN</button>
+        </div>
+        <div class="radix-group" id="radixGroup" role="group" aria-label="输出进制选择">
+          <button type="button" class="radix-btn active" data-radix="10" id="radixBtn10">10进制</button>
+          <button type="button" class="radix-btn" data-radix="16" id="radixBtn16">十六进制</button>
+          <button type="button" class="radix-btn" data-radix="2" id="radixBtn2">二进制</button>
         </div>
         <button type="button" class="btn" id="clearBtn">清空</button>
         <button type="button" class="btn btn-help" id="helpBtn" aria-haspopup="dialog" aria-controls="helpDrawer">
-          <span>?</span> 使用帮助
+          <span>?</span> <span id="helpBtnText">使用帮助</span>
         </button>
       </div>
     </header>
 
     <main class="card">
       <div class="card-header">
-        <div>数据类型</div>
-        <div>数值范围</div>
-        <div>字节序</div>
-        <div>数值输入 / 显示 (Enter)</div>
-        <div>状态提示</div>
+        <div id="thType">数据类型</div>
+        <div id="thRange">数值范围</div>
+        <div id="thOrder">字节序</div>
+        <div id="thInput">数值输入 / 显示 (Enter)</div>
+        <div id="thStatus">状态提示</div>
       </div>
 
-      <div class="section-divider">INT · 有符号整型</div>
+      <div class="section-divider" id="secInt">INT · 有符号整型</div>
       <div id="rows-int">
         <div class="row" id="row-int8">
           <div class="type-info">
             <span class="type-code">int8</span>
-            <span class="type-cn">8位有符号整型</span>
+            <span class="type-cn" id="cn-int8">8位有符号整型</span>
           </div>
           <div class="range-cell">-128 <span class="range-sep">~</span> 127</div>
           <div class="order-cell">
@@ -767,7 +839,7 @@
         <div class="row" id="row-int16">
           <div class="type-info">
             <span class="type-code">int16</span>
-            <span class="type-cn">16位有符号整型</span>
+            <span class="type-cn" id="cn-int16">16位有符号整型</span>
           </div>
           <div class="range-cell">-32,768 <span class="range-sep">~</span> 32,767</div>
           <div class="order-cell">
@@ -787,9 +859,9 @@
         <div class="row" id="row-int32">
           <div class="type-info">
             <span class="type-code">int32</span>
-            <span class="type-cn">32位有符号整型</span>
+            <span class="type-cn" id="cn-int32">32位有符号整型</span>
           </div>
-          <div class="range-cell" title="精确范围: -2,147,483,648 ~ 2,147,483,647">-2³¹ <span class="range-sep">~</span> 2³¹-1 <span class="range-sep">(±2.15e9)</span></div>
+          <div class="range-cell" id="range-int32" title="精确范围: -2,147,483,648 ~ 2,147,483,647">-2³¹ <span class="range-sep">~</span> 2³¹-1 <span class="range-sep">(±2.15e9)</span></div>
           <div class="order-cell">
             <select class="order-select" id="order-int32" data-type="int32" aria-label="int32 字节序">
               <option value="ABCD">ABCD (大端)</option><option value="DCBA">DCBA (小端)</option><option value="BADC">BADC (字节交换)</option><option value="CDAB">CDAB (字交换)</option>
@@ -807,9 +879,9 @@
         <div class="row" id="row-int64">
           <div class="type-info">
             <span class="type-code">int64</span>
-            <span class="type-cn">64位有符号整型</span>
+            <span class="type-cn" id="cn-int64">64位有符号整型</span>
           </div>
-          <div class="range-cell" title="精确范围: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807">-2⁶³ <span class="range-sep">~</span> 2⁶³-1 <span class="range-sep">(±9.22e18)</span></div>
+          <div class="range-cell" id="range-int64" title="精确范围: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807">-2⁶³ <span class="range-sep">~</span> 2⁶³-1 <span class="range-sep">(±9.22e18)</span></div>
           <div class="order-cell">
             <select class="order-select" id="order-int64" data-type="int64" aria-label="int64 字节序">
               <option value="ABCDEFGH">ABCDEFGH (大端)</option><option value="HGFEDCBA">HGFEDCBA (小端)</option><option value="BADCFEHG">BADCFEHG (字节交换)</option><option value="GHEFCDAB">GHEFCDAB (字交换)</option><option value="EFGHABCD">EFGHABCD (双字交换)</option>
@@ -826,12 +898,12 @@
         </div>
       </div>
 
-      <div class="section-divider">UINT · 无符号整型</div>
+      <div class="section-divider" id="secUint">UINT · 无符号整型</div>
       <div id="rows-uint">
         <div class="row active-row" id="row-uint8">
           <div class="type-info">
             <span class="type-code">uint8</span>
-            <span class="type-cn">8位无符号整型</span>
+            <span class="type-cn" id="cn-uint8">8位无符号整型</span>
           </div>
           <div class="range-cell">0 <span class="range-sep">~</span> 255</div>
           <div class="order-cell">
@@ -851,7 +923,7 @@
         <div class="row" id="row-uint16">
           <div class="type-info">
             <span class="type-code">uint16</span>
-            <span class="type-cn">16位无符号整型</span>
+            <span class="type-cn" id="cn-uint16">16位无符号整型</span>
           </div>
           <div class="range-cell">0 <span class="range-sep">~</span> 65,535</div>
           <div class="order-cell">
@@ -871,9 +943,9 @@
         <div class="row" id="row-uint32">
           <div class="type-info">
             <span class="type-code">uint32</span>
-            <span class="type-cn">32位无符号整型</span>
+            <span class="type-cn" id="cn-uint32">32位无符号整型</span>
           </div>
-          <div class="range-cell" title="精确范围: 0 ~ 4,294,967,295">0 <span class="range-sep">~</span> 2³²-1 <span class="range-sep">(4.29e9)</span></div>
+          <div class="range-cell" id="range-uint32" title="精确范围: 0 ~ 4,294,967,295">0 <span class="range-sep">~</span> 2³²-1 <span class="range-sep">(4.29e9)</span></div>
           <div class="order-cell">
             <select class="order-select" id="order-uint32" data-type="uint32" aria-label="uint32 字节序">
               <option value="ABCD">ABCD (大端)</option><option value="DCBA">DCBA (小端)</option><option value="BADC">BADC (字节交换)</option><option value="CDAB">CDAB (字交换)</option>
@@ -891,9 +963,9 @@
         <div class="row" id="row-uint64">
           <div class="type-info">
             <span class="type-code">uint64</span>
-            <span class="type-cn">64位无符号整型</span>
+            <span class="type-cn" id="cn-uint64">64位无符号整型</span>
           </div>
-          <div class="range-cell" title="精确范围: 0 ~ 18,446,744,073,709,551,615">0 <span class="range-sep">~</span> 2⁶⁴-1 <span class="range-sep">(1.84e19)</span></div>
+          <div class="range-cell" id="range-uint64" title="精确范围: 0 ~ 18,446,744,073,709,551,615">0 <span class="range-sep">~</span> 2⁶⁴-1 <span class="range-sep">(1.84e19)</span></div>
           <div class="order-cell">
             <select class="order-select" id="order-uint64" data-type="uint64" aria-label="uint64 字节序">
               <option value="ABCDEFGH">ABCDEFGH (大端)</option><option value="HGFEDCBA">HGFEDCBA (小端)</option><option value="BADCFEHG">BADCFEHG (字节交换)</option><option value="GHEFCDAB">GHEFCDAB (字交换)</option><option value="EFGHABCD">EFGHABCD (双字交换)</option>
@@ -910,14 +982,14 @@
         </div>
       </div>
 
-      <div class="section-divider">FLOAT / DOUBLE · 浮点型</div>
+      <div class="section-divider" id="secFloat">FLOAT / DOUBLE · 浮点型</div>
       <div id="rows-float">
         <div class="row" id="row-float">
           <div class="type-info">
             <span class="type-code">float</span>
-            <span class="type-cn">单精度浮点</span>
+            <span class="type-cn" id="cn-float">单精度浮点</span>
           </div>
-          <div class="range-cell" title="精确范围: -3.4028235e+38 ~ 3.4028235e+38">±3.4028e+38 <span class="range-sep">(IEEE 754)</span></div>
+          <div class="range-cell" id="range-float" title="精确范围: -3.4028235e+38 ~ 3.4028235e+38">±3.4028e+38 <span class="range-sep">(IEEE 754)</span></div>
           <div class="order-cell">
             <select class="order-select" id="order-float" data-type="float" aria-label="float 字节序">
               <option value="ABCD">ABCD (大端)</option><option value="DCBA">DCBA (小端)</option><option value="BADC">BADC (字节交换)</option><option value="CDAB">CDAB (字交换)</option>
@@ -935,9 +1007,9 @@
         <div class="row" id="row-double">
           <div class="type-info">
             <span class="type-code">double</span>
-            <span class="type-cn">双精度浮点</span>
+            <span class="type-cn" id="cn-double">双精度浮点</span>
           </div>
-          <div class="range-cell" title="精确范围: -1.7976931348623157e+308 ~ 1.7976931348623157e+308">±1.7977e+308 <span class="range-sep">(IEEE 754)</span></div>
+          <div class="range-cell" id="range-double" title="精确范围: -1.7976931348623157e+308 ~ 1.7976931348623157e+308">±1.7977e+308 <span class="range-sep">(IEEE 754)</span></div>
           <div class="order-cell">
             <select class="order-select" id="order-double" data-type="double" aria-label="double 字节序">
               <option value="ABCDEFGH">ABCDEFGH (大端)</option><option value="HGFEDCBA">HGFEDCBA (小端)</option><option value="BADCFEHG">BADCFEHG (字节交换)</option><option value="GHEFCDAB">GHEFCDAB (字交换)</option><option value="EFGHABCD">EFGHABCD (双字交换)</option>
@@ -954,124 +1026,32 @@
         </div>
       </div>
     </main>
+
+    <footer class="footer">
+      <div class="footer-author">
+        <span id="footerAuthorLabel">作者</span>
+        <a class="footer-link" id="footerAuthorLink" href="https://github.com/lilixxs/dataConvlilixxs" target="_blank" rel="noopener noreferrer" title="GitHub: lilixxs/dataConvlilixxs">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          <span id="footerAuthorName">lilixxs</span>
+          <span>·</span>
+          <span id="footerRepoLabel">GitHub 项目主页</span>
+        </a>
+      </div>
+      <div class="footer-copyright" id="footerCopyright">Copyright © 2026 lilixxs · 基于 MIT 协议开源</div>
+    </footer>
   </div>
 
   <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
   <aside class="help-drawer" id="helpDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
     <div class="drawer-header">
       <div class="drawer-title-group">
-        <span class="drawer-tag">&gt;_ MANUAL &amp; GUIDE</span>
+        <span class="drawer-tag" id="drawerTag">&gt;_ MANUAL &amp; GUIDE</span>
         <h2 class="drawer-title" id="drawerTitle">使用帮助与转换说明</h2>
       </div>
       <button type="button" class="drawer-close" id="closeDrawerBtn" title="关闭 (Esc)" aria-label="关闭帮助">✕</button>
     </div>
 
-    <div class="drawer-body">
-      <section class="help-section">
-        <h3 class="help-sec-title"><span class="help-sec-num">01</span> 快速输入与触发转换</h3>
-        <ul class="help-list">
-          <li><strong>任意行输入：</strong>在任一数据类型框中输入数值。</li>
-          <li><strong>一键触发：</strong>按 <span class="kbd-tag">Enter</span> 键或点击右侧 <span class="kbd-tag">↵</span> 图标。</li>
-          <li><strong>全量同步：</strong>自动计算并更新其余 9 种数据类型。</li>
-        </ul>
-        <div class="help-diagram">
-          <span class="diagram-caption">// 支持直接输入以下 3 种格式（不区分大小写）</span>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">十进制 / 科学计数</span>
-            <code>200</code> <code>-32768</code> <code>3.14e-2</code>
-          </div>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">十六进制 (0x前缀)</span>
-            <code>0x12345678</code> <code>0xFF</code>
-          </div>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">二进制 (0b前缀)</span>
-            <code>0b11001000</code> <code>0b0101</code>
-          </div>
-        </div>
-      </section>
-
-      <section class="help-section">
-        <h3 class="help-sec-title"><span class="help-sec-num">02</span> 字节序（Endianness）图解</h3>
-        <ul class="help-list">
-          <li><strong>字节编号：</strong>标准大端序（高字节在前）依次记为 <strong>A, B, C, D...</strong></li>
-          <li><strong>独立切换：</strong>每行可单独选择字节序，实时重排当前行显示结果。</li>
-          <li><strong>适用场景：</strong>方便 Modbus 寄存器或 STM32 大小端跨设备调试。</li>
-        </ul>
-        <div class="help-diagram">
-          <span class="diagram-caption">// 以 32 位数值 0x12345678 为例：</span>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">ABCD (大端)</span>
-            <div class="byte-boxes">
-              <span class="byte-box"><small>A</small>12</span>
-              <span class="byte-box"><small>B</small>34</span>
-              <span class="byte-box"><small>C</small>56</span>
-              <span class="byte-box"><small>D</small>78</span>
-            </div>
-          </div>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">DCBA (小端)</span>
-            <div class="byte-boxes">
-              <span class="byte-box"><small>D</small>78</span>
-              <span class="byte-box"><small>C</small>56</span>
-              <span class="byte-box"><small>B</small>34</span>
-              <span class="byte-box"><small>A</small>12</span>
-            </div>
-          </div>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">BADC (字节交换)</span>
-            <div class="byte-boxes">
-              <span class="byte-box"><small>B</small>34</span>
-              <span class="byte-box"><small>A</small>12</span>
-              <span class="byte-box"><small>D</small>78</span>
-              <span class="byte-box"><small>C</small>56</span>
-            </div>
-          </div>
-          <div class="byte-vis-row">
-            <span class="byte-vis-label">CDAB (字交换)</span>
-            <div class="byte-boxes">
-              <span class="byte-box"><small>C</small>56</span>
-              <span class="byte-box"><small>D</small>78</span>
-              <span class="byte-box"><small>A</small>12</span>
-              <span class="byte-box"><small>B</small>34</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="help-section">
-        <h3 class="help-sec-title"><span class="help-sec-num">03</span> 视觉分块与无空格复制</h3>
-        <ul class="help-list">
-          <li><strong>按字节留白：</strong>16 进制与 2 进制下，每字节自动间隔显示以便阅读。</li>
-          <li><strong>一键无空格复制：</strong>点击输入框右侧 <span class="kbd-tag" style="display:inline-flex;align-items:center;vertical-align:middle;padding:2px 4px"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8"></rect><path d="M10.5 5.5V2.5H2.5V10.5H5.5"></path></svg></span> 复制图标（或划选复制）会自动剔除间隔并显示 <span class="kbd-tag" style="color:var(--success-text);background:var(--success-bg);border-color:var(--success-border)">√</span>，可直接粘贴至代码中。</li>
-        </ul>
-        <div class="help-diagram">
-          <div class="copy-demo">
-            <span>界面显示: <span style="color:var(--text-muted)">0x</span>12 34 56 78</span>
-            <span class="copy-arrow">──复制──►</span>
-            <span style="color:var(--accent-clay-dark);font-weight:600">0x12345678</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="help-section">
-        <h3 class="help-sec-title"><span class="help-sec-num">04</span> STM32 转换与量程规范</h3>
-        <ul class="help-list">
-          <li>
-            <strong>浮点转整型：</strong>遵循 C 标准向零截断
-            <span class="help-subline">例：<code>12.9 → 12</code>，<code>-12.9 → -12</code></span>
-          </li>
-          <li>
-            <strong>目标超范围：</strong>源数值超出目标类型量程时提示 <span class="kbd-tag" style="color:var(--warn-text);background:var(--warn-bg);border-color:var(--warn-border)">超范围</span>
-            <span class="help-subline">例：输入 <code>uint8 = 200</code> 时，<code>int8</code> 显示超范围</span>
-          </li>
-          <li>
-            <strong>源输入越界：</strong>输入值超出当前行量程时，右侧状态栏标红报错
-            <span class="help-subline">报错或超范围状态下切换进制，不会触发错误转换</span>
-          </li>
-        </ul>
-      </section>
-    </div>
+    <div class="drawer-body" id="drawerBody"></div>
   </aside>
 
   <script>
@@ -1091,14 +1071,596 @@
         { id: "double", name: "double", kind: "double", bits: 64, minFloat: -1.7976931348623157e+308, maxFloat: 1.7976931348623157e+308, rangeLabel: "±1.7977e+308" }
       ];
 
+      /* Built-in fallback dictionaries when opened directly via file:// protocol where fetch() is blocked by CORS */
+      const FALLBACK_I18N = {
+        "zh-CN": {
+          lang: "zh-CN",
+          pageTitle: "STM32 数据类型转换器",
+          terminalTag: ">_ STM32 DATA CONVERTER",
+          title: "STM32 数据类型转换工具",
+          subtitle: "支持多字节序（ABCD / CDAB 等）与 10/16/2 进制切换，16 进制与 2 进制按字节间隔显示且复制不含空格",
+          toolbar: {
+            radixGroupAria: "输出进制选择",
+            radix10: "10进制",
+            radix16: "十六进制",
+            radix2: "二进制",
+            clearBtn: "清空",
+            helpBtn: "使用帮助",
+            langGroupAria: "界面语言选择"
+          },
+          tableHeader: {
+            type: "数据类型",
+            range: "数值范围",
+            order: "字节序",
+            input: "数值输入 / 显示 (Enter)",
+            status: "状态提示"
+          },
+          sections: {
+            int: "INT · 有符号整型",
+            uint: "UINT · 无符号整型",
+            float: "FLOAT / DOUBLE · 浮点型"
+          },
+          types: {
+            int8: "8位有符号整型",
+            int16: "16位有符号整型",
+            int32: "32位有符号整型",
+            int64: "64位有符号整型",
+            uint8: "8位无符号整型",
+            uint16: "16位无符号整型",
+            uint32: "32位无符号整型",
+            uint64: "64位无符号整型",
+            float: "单精度浮点",
+            double: "双精度浮点"
+          },
+          rangeTitles: {
+            int32: "精确范围: -2,147,483,648 ~ 2,147,483,647",
+            int64: "精确范围: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807",
+            uint32: "精确范围: 0 ~ 4,294,967,295",
+            uint64: "精确范围: 0 ~ 18,446,744,073,709,551,615",
+            float: "精确范围: -3.4028235e+38 ~ 3.4028235e+38",
+            double: "精确范围: -1.7976931348623157e+308 ~ 1.7976931348623157e+308"
+          },
+          endianOptions: {
+            A: "A (单字节)",
+            AB: "AB (大端)",
+            BA: "BA (小端)",
+            ABCD: "ABCD (大端)",
+            DCBA: "DCBA (小端)",
+            BADC: "BADC (字节交换)",
+            CDAB: "CDAB (字交换)",
+            ABCDEFGH: "ABCDEFGH (大端)",
+            HGFEDCBA: "HGFEDCBA (小端)",
+            BADCFEHG: "BADCFEHG (字节交换)",
+            GHEFCDAB: "GHEFCDAB (字交换)",
+            EFGHABCD: "EFGHABCD (双字交换)"
+          },
+          input: {
+            placeholder: "输入数值并按回车...",
+            enterHintTitle: "按回车转换",
+            copyBtnTitle: "复制数值",
+            orderAriaSuffix: "字节序",
+            inputAriaSuffix: "数值输入"
+          },
+          status: {
+            outOfRange: "超范围",
+            ok: "转换完成",
+            errRange: "错误：{type} 量程应为 {range}"
+          },
+          drawer: {
+            tag: ">_ MANUAL & GUIDE",
+            title: "使用帮助与转换说明",
+            closeTitle: "关闭 (Esc)",
+            closeAria: "关闭帮助",
+            loading: "正在加载帮助文档..."
+          },
+          footer: {
+            authorLabel: "作者",
+            authorName: "lilixxs",
+            repoLabel: "GitHub 项目主页",
+            copyright: "Copyright © 2026 lilixxs · 基于 MIT 协议开源"
+          }
+        },
+        "en-US": {
+          lang: "en-US",
+          pageTitle: "STM32 Data Type Converter",
+          terminalTag: ">_ STM32 DATA CONVERTER",
+          title: "STM32 Data Type Converter",
+          subtitle: "Multi-endianness (ABCD / CDAB, etc.) & Dec/Hex/Bin conversion with byte-spaced display and space-free copy",
+          toolbar: {
+            radixGroupAria: "Output radix selection",
+            radix10: "DEC",
+            radix16: "HEX",
+            radix2: "BIN",
+            clearBtn: "Clear",
+            helpBtn: "Manual",
+            langGroupAria: "Interface language selection"
+          },
+          tableHeader: {
+            type: "Data Type",
+            range: "Value Range",
+            order: "Endianness",
+            input: "Value Input / Display (Enter)",
+            status: "Status"
+          },
+          sections: {
+            int: "INT · Signed Integer",
+            uint: "UINT · Unsigned Integer",
+            float: "FLOAT / DOUBLE · Floating-Point"
+          },
+          types: {
+            int8: "8-bit signed int",
+            int16: "16-bit signed int",
+            int32: "32-bit signed int",
+            int64: "64-bit signed int",
+            uint8: "8-bit unsigned int",
+            uint16: "16-bit unsigned int",
+            uint32: "32-bit unsigned int",
+            uint64: "64-bit unsigned int",
+            float: "Single-precision float",
+            double: "Double-precision float"
+          },
+          rangeTitles: {
+            int32: "Exact range: -2,147,483,648 ~ 2,147,483,647",
+            int64: "Exact range: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807",
+            uint32: "Exact range: 0 ~ 4,294,967,295",
+            uint64: "Exact range: 0 ~ 18,446,744,073,709,551,615",
+            float: "Exact range: -3.4028235e+38 ~ 3.4028235e+38",
+            double: "Exact range: -1.7976931348623157e+308 ~ 1.7976931348623157e+308"
+          },
+          endianOptions: {
+            A: "A (1-Byte)",
+            AB: "AB (Big-Endian)",
+            BA: "BA (Little-Endian)",
+            ABCD: "ABCD (Big-Endian)",
+            DCBA: "DCBA (Little-Endian)",
+            BADC: "BADC (Byte Swap)",
+            CDAB: "CDAB (Word Swap)",
+            ABCDEFGH: "ABCDEFGH (Big-Endian)",
+            HGFEDCBA: "HGFEDCBA (Little-Endian)",
+            BADCFEHG: "BADCFEHG (Byte Swap)",
+            GHEFCDAB: "GHEFCDAB (Word Swap)",
+            EFGHABCD: "EFGHABCD (DWord Swap)"
+          },
+          input: {
+            placeholder: "Enter value & press Enter...",
+            enterHintTitle: "Press Enter to convert",
+            copyBtnTitle: "Copy value",
+            orderAriaSuffix: "endianness",
+            inputAriaSuffix: "value input"
+          },
+          status: {
+            outOfRange: "Out of range",
+            ok: "Converted",
+            errRange: "Error: {type} range is {range}"
+          },
+          drawer: {
+            tag: ">_ MANUAL & GUIDE",
+            title: "User Manual & Conversion Guide",
+            closeTitle: "Close (Esc)",
+            closeAria: "Close manual",
+            loading: "Loading manual..."
+          },
+          footer: {
+            authorLabel: "Author",
+            authorName: "lilixxs",
+            repoLabel: "GitHub Repository",
+            copyright: "Copyright © 2026 lilixxs · Released under the MIT License"
+          }
+        }
+      };
+
+      const FALLBACK_HELP_MD = {
+        "zh-CN": [
+          "## 01 快速输入与触发转换",
+          "",
+          "- **任意行输入：**在任一数据类型框中输入数值。",
+          "- **一键触发：**按 `Enter` 键或点击右侧 `↵` 图标。",
+          "- **全量同步：**自动计算并更新其余 9 种数据类型。",
+          "",
+          "> // 支持直接输入以下 3 种格式（不区分大小写）",
+          "| 格式类型 | 示例 |",
+          "| :--- | :--- |",
+          "| 十进制 / 科学计数 | `200` `-32768` `3.14e-2` |",
+          "| 十六进制 (0x前缀) | `0x12345678` `0xFF` |",
+          "| 二进制 (0b前缀) | `0b11001000` `0b0101` |",
+          "",
+          "## 02 字节序（Endianness）图解",
+          "",
+          "- **字节编号：**标准大端序（高字节在前）依次记为 **A, B, C, D...**",
+          "- **独立切换：**每行可单独选择字节序，实时重排当前行显示结果。",
+          "- **适用场景：**方便 Modbus 寄存器或 STM32 大小端跨设备调试。",
+          "",
+          "> // 以 32 位数值 0x12345678 为例：",
+          "| 字节序模式 | 字节排列 |",
+          "| :--- | :--- |",
+          "| ABCD (大端) | `A:12` `B:34` `C:56` `D:78` |",
+          "| DCBA (小端) | `D:78` `C:56` `B:34` `A:12` |",
+          "| BADC (字节交换) | `B:34` `A:12` `D:78` `C:56` |",
+          "| CDAB (字交换) | `C:56` `D:78` `A:12` `B:34` |",
+          "",
+          "## 03 视觉分块与无空格复制",
+          "",
+          "- **按字节留白：**16 进制与 2 进制下，每字节自动间隔显示以便阅读。",
+          "- **一键无空格复制：**点击输入框右侧 `[COPY_ICON]` 复制图标（或划选复制）会自动剔除间隔并显示 `[OK_MARK]`，可直接粘贴至代码中。",
+          "",
+          "> COPY_DEMO: 界面显示: 0x12 34 56 78 | ──复制──► | 0x12345678",
+          "",
+          "## 04 STM32 转换与量程规范",
+          "",
+          "- **浮点转整型：**遵循 C 标准向零截断",
+          "  SUB: 例：`12.9 → 12`，`-12.9 → -12`",
+          "- **目标超范围：**源数值超出目标类型量程时提示 `[WARN:超范围]`",
+          "  SUB: 例：输入 `uint8 = 200` 时，`int8` 显示超范围",
+          "- **源输入越界：**输入值超出当前行量程时，右侧状态栏标红报错",
+          "  SUB: 报错或超范围状态下切换进制，不会触发错误转换"
+        ].join("\n"),
+        "en-US": [
+          "## 01 Quick Input & Conversion Trigger",
+          "",
+          "- **Enter in any row:** Type a value in any data type box.",
+          "- **Trigger conversion:** Press `Enter` or click the `↵` icon on the right.",
+          "- **Sync all types:** Compute and update the other 9 data types automatically.",
+          "",
+          "> // Supports 3 input formats (case-insensitive)",
+          "| Format | Examples |",
+          "| :--- | :--- |",
+          "| Decimal / Scientific | `200` `-32768` `3.14e-2` |",
+          "| Hexadecimal (0x prefix) | `0x12345678` `0xFF` |",
+          "| Binary (0b prefix) | `0b11001000` `0b0101` |",
+          "",
+          "## 02 Endianness Diagram",
+          "",
+          "- **Byte labels:** Canonical Big-Endian (MSB first) labels bytes as **A, B, C, D...**",
+          "- **Per-row selection:** Select endianness independently on each row to reorder its display immediately.",
+          "- **Use case:** Debug Modbus registers or cross-device STM32 byte ordering.",
+          "",
+          "> // Example for 32-bit value 0x12345678:",
+          "| Endianness | Byte Order |",
+          "| :--- | :--- |",
+          "| ABCD (Big-Endian) | `A:12` `B:34` `C:56` `D:78` |",
+          "| DCBA (Little-Endian) | `D:78` `C:56` `B:34` `A:12` |",
+          "| BADC (Byte Swap) | `B:34` `A:12` `D:78` `C:56` |",
+          "| CDAB (Word Swap) | `C:56` `D:78` `A:12` `B:34` |",
+          "",
+          "## 03 Visual Byte Spacing & Space-Free Copy",
+          "",
+          "- **Byte spacing:** Hex and Binary modes insert visual margins between bytes for readability.",
+          "- **Space-free copy:** Click the `[COPY_ICON]` button (or select and copy) to strip visual gaps and show `[OK_MARK]`, ready to paste into C code.",
+          "",
+          "> COPY_DEMO: Display: 0x12 34 56 78 | ──Copy──► | 0x12345678",
+          "",
+          "## 04 STM32 Conversion & Range Rules",
+          "",
+          "- **Float to integer:** Truncates toward zero per C standard",
+          "  SUB: Example: `12.9 → 12`, `-12.9 → -12`",
+          "- **Target overflow:** Displays `[WARN:Out of range]` when the source value exceeds the target range",
+          "  SUB: Example: When `uint8 = 200`, `int8` shows Out of range",
+          "- **Source out of bounds:** Highlights the status cell in red when the input exceeds the row range",
+          "  SUB: Switching radix during an error or overflow state never triggers an invalid conversion"
+        ].join("\n")
+      };
+
       const buf8 = new ArrayBuffer(8);
       const view8 = new DataView(buf8);
       let currentRadix = 10;
+      let currentLang = "zh-CN";
+      let currentDict = FALLBACK_I18N["zh-CN"];
       let lastConversionValid = false;
+      let activeSourceId = null;
+      let activeStatusKind = null;
       const cellValues = {};
       const rowElements = {};
       const copyTimers = {};
+      const localeCache = {};
+      const helpCache = {};
       const COPY_ICON_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8"></rect><path d="M10.5 5.5V2.5H2.5V10.5H5.5"></path></svg>';
+      const INLINE_COPY_TAG = '<span class="kbd-tag" style="display:inline-flex;align-items:center;vertical-align:middle;padding:2px 4px"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8"></rect><path d="M10.5 5.5V2.5H2.5V10.5H5.5"></path></svg></span>';
+      const INLINE_OK_TAG = '<span class="kbd-tag" style="color:var(--success-text);background:var(--success-bg);border-color:var(--success-border)">√</span>';
+
+      function isOutOfRangeText(text) {
+        const trimmed = (text || "").trim();
+        return (
+          trimmed === "超范围" ||
+          trimmed === "Out of range" ||
+          trimmed === "Outofrange" ||
+          trimmed === currentDict.status.outOfRange ||
+          trimmed === currentDict.status.outOfRange.replace(/\s+/g, "")
+        );
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function formatInlineMarkdown(text) {
+        let html = escapeHtml(text);
+        html = html.replace(/\[COPY_ICON\]/g, INLINE_COPY_TAG);
+        html = html.replace(/\[OK_MARK\]/g, INLINE_OK_TAG);
+        html = html.replace(/\[WARN:([^\]]+)\]/g, (_, label) => {
+          return `<span class="kbd-tag" style="color:var(--warn-text);background:var(--warn-bg);border-color:var(--warn-border)">${label}</span>`;
+        });
+        html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        html = html.replace(/`([^`]+)`/g, (_, code) => {
+          if (code === "Enter" || code === "↵") {
+            return `<span class="kbd-tag">${code}</span>`;
+          }
+          return `<code>${code}</code>`;
+        });
+        return html;
+      }
+
+      function renderHelpMarkdown(mdText) {
+        const lines = mdText.replace(/\r\n/g, "\n").split("\n");
+        const sections = [];
+        let currentSection = null;
+        let i = 0;
+
+        while (i < lines.length) {
+          const line = lines[i].trim();
+          if (!line) {
+            i++;
+            continue;
+          }
+
+          const secMatch = line.match(/^##\s+(\d+)\s+(.+)$/);
+          if (secMatch) {
+            currentSection = {
+              num: secMatch[1],
+              title: secMatch[2],
+              blocks: []
+            };
+            sections.push(currentSection);
+            i++;
+            continue;
+          }
+
+          if (!currentSection) {
+            i++;
+            continue;
+          }
+
+          if (line.startsWith("- ")) {
+            const listItems = [];
+            while (i < lines.length) {
+              const rawItem = lines[i];
+              const trimmedItem = rawItem.trim();
+              if (trimmedItem.startsWith("- ")) {
+                listItems.push({ main: trimmedItem.slice(2).trim(), sub: null });
+                i++;
+              } else if (trimmedItem.startsWith("SUB:") && listItems.length > 0) {
+                listItems[listItems.length - 1].sub = trimmedItem.slice(4).trim();
+                i++;
+              } else {
+                break;
+              }
+            }
+            const ulHtml =
+              '<ul class="help-list">' +
+              listItems
+                .map((item) => {
+                  const mainHtml = formatInlineMarkdown(item.main);
+                  const subHtml = item.sub
+                    ? `<span class="help-subline">${formatInlineMarkdown(item.sub)}</span>`
+                    : "";
+                  return `<li>${mainHtml}${subHtml}</li>`;
+                })
+                .join("") +
+              "</ul>";
+            currentSection.blocks.push(ulHtml);
+            continue;
+          }
+
+          if (line.startsWith("> COPY_DEMO:")) {
+            const parts = line
+              .slice("> COPY_DEMO:".length)
+              .split("|")
+              .map((s) => s.trim());
+            const left = escapeHtml(parts[0] || "").replace(
+              /0x([0-9A-Fa-f\s]+)/,
+              '<span style="color:var(--text-muted)">0x</span>$1'
+            );
+            const arrow = escapeHtml(parts[1] || "──►");
+            const right = escapeHtml(parts[2] || "");
+            currentSection.blocks.push(
+              `<div class="help-diagram"><div class="copy-demo"><span>${left}</span><span class="copy-arrow">${arrow}</span><span style="color:var(--accent-clay-dark);font-weight:600">${right}</span></div></div>`
+            );
+            i++;
+            continue;
+          }
+
+          if (line.startsWith(">")) {
+            const caption = escapeHtml(line.replace(/^>\s*/, ""));
+            i++;
+            const tableRows = [];
+            while (i < lines.length) {
+              const tLine = lines[i].trim();
+              if (!tLine.startsWith("|")) break;
+              const cells = tLine
+                .split("|")
+                .slice(1, -1)
+                .map((c) => c.trim());
+              const isSeparator = cells.every((c) => /^:?-{2,}:?$/.test(c));
+              if (!isSeparator && cells.length >= 2) {
+                tableRows.push(cells);
+              }
+              i++;
+            }
+            const dataRows = tableRows.length > 1 ? tableRows.slice(1) : tableRows;
+            const rowsHtml = dataRows
+              .map((cols) => {
+                const label = escapeHtml(cols[0]);
+                const rawRight = cols[1];
+                const codeTokens = [...rawRight.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+                const isByteBoxes =
+                  codeTokens.length > 0 &&
+                  codeTokens.every((tok) => /^[A-H]:[0-9A-Fa-f]{2}$/.test(tok));
+
+                let rightHtml = "";
+                if (isByteBoxes) {
+                  rightHtml =
+                    '<div class="byte-boxes">' +
+                    codeTokens
+                      .map((tok) => {
+                        const [bLabel, bVal] = tok.split(":");
+                        return `<span class="byte-box"><small>${escapeHtml(bLabel)}</small>${escapeHtml(bVal)}</span>`;
+                      })
+                      .join("") +
+                    "</div>";
+                } else {
+                  rightHtml = codeTokens.map((tok) => `<code>${escapeHtml(tok)}</code>`).join(" ");
+                }
+                return `<div class="byte-vis-row"><span class="byte-vis-label">${label}</span>${rightHtml}</div>`;
+              })
+              .join("");
+
+            currentSection.blocks.push(
+              `<div class="help-diagram"><span class="diagram-caption">${caption}</span>${rowsHtml}</div>`
+            );
+            continue;
+          }
+
+          i++;
+        }
+
+        return sections
+          .map((sec) => {
+            return `<section class="help-section"><h3 class="help-sec-title"><span class="help-sec-num">${escapeHtml(sec.num)}</span> ${escapeHtml(sec.title)}</h3>${sec.blocks.join("")}</section>`;
+          })
+          .join("");
+      }
+
+      async function fetchLocaleData(lang) {
+        if (!localeCache[lang]) {
+          try {
+            const res = await fetch(`./i18n/${lang}.json`, { cache: "no-cache" });
+            if (res.ok) {
+              localeCache[lang] = await res.json();
+            }
+          } catch (e) {
+            /* Fallback used when opened via file:// */
+          }
+          if (!localeCache[lang]) {
+            localeCache[lang] = FALLBACK_I18N[lang] || FALLBACK_I18N["zh-CN"];
+          }
+        }
+
+        if (!helpCache[lang]) {
+          try {
+            const res = await fetch(`./i18n/help.${lang}.md`, { cache: "no-cache" });
+            if (res.ok) {
+              helpCache[lang] = await res.text();
+            }
+          } catch (e) {
+            /* Fallback used when opened via file:// */
+          }
+          if (!helpCache[lang]) {
+            helpCache[lang] = FALLBACK_HELP_MD[lang] || FALLBACK_HELP_MD["zh-CN"];
+          }
+        }
+
+        return { dict: localeCache[lang], helpMd: helpCache[lang] };
+      }
+
+      function renderActiveStatus() {
+        if (!activeSourceId || !activeStatusKind) return;
+        const sourceItem = rowElements[activeSourceId];
+        if (!sourceItem) return;
+        sourceItem.status.innerHTML = "";
+        const msgEl = document.createElement("div");
+        if (activeStatusKind === "ok") {
+          msgEl.className = "status-msg status-ok";
+          msgEl.textContent = currentDict.status.ok;
+        } else if (activeStatusKind === "err") {
+          msgEl.className = "status-msg status-err";
+          msgEl.textContent = currentDict.status.errRange
+            .replace("{type}", sourceItem.def.name)
+            .replace("{range}", sourceItem.def.rangeLabel);
+        }
+        sourceItem.status.appendChild(msgEl);
+      }
+
+      async function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll(".lang-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+        });
+
+        const { dict, helpMd } = await fetchLocaleData(lang);
+        currentDict = dict;
+
+        document.documentElement.lang = dict.lang;
+        document.title = dict.pageTitle;
+        document.getElementById("terminalTag").textContent = dict.terminalTag;
+        document.getElementById("pageTitleEl").textContent = dict.title;
+        document.getElementById("pageSubtitleEl").textContent = dict.subtitle;
+
+        document.getElementById("langGroup").setAttribute("aria-label", dict.toolbar.langGroupAria);
+        document.getElementById("radixGroup").setAttribute("aria-label", dict.toolbar.radixGroupAria);
+        document.getElementById("radixBtn10").textContent = dict.toolbar.radix10;
+        document.getElementById("radixBtn16").textContent = dict.toolbar.radix16;
+        document.getElementById("radixBtn2").textContent = dict.toolbar.radix2;
+        document.getElementById("clearBtn").textContent = dict.toolbar.clearBtn;
+        document.getElementById("helpBtnText").textContent = dict.toolbar.helpBtn;
+
+        document.getElementById("thType").textContent = dict.tableHeader.type;
+        document.getElementById("thRange").textContent = dict.tableHeader.range;
+        document.getElementById("thOrder").textContent = dict.tableHeader.order;
+        document.getElementById("thInput").textContent = dict.tableHeader.input;
+        document.getElementById("thStatus").textContent = dict.tableHeader.status;
+
+        document.getElementById("secInt").textContent = dict.sections.int;
+        document.getElementById("secUint").textContent = dict.sections.uint;
+        document.getElementById("secFloat").textContent = dict.sections.float;
+
+        DATA_TYPES.forEach((dt) => {
+          const item = rowElements[dt.id];
+          const cnEl = document.getElementById(`cn-${dt.id}`);
+          if (cnEl && dict.types[dt.id]) {
+            cnEl.textContent = dict.types[dt.id];
+          }
+          const rangeEl = document.getElementById(`range-${dt.id}`);
+          if (rangeEl && dict.rangeTitles[dt.id]) {
+            rangeEl.setAttribute("title", dict.rangeTitles[dt.id]);
+          }
+          Array.from(item.order.options).forEach((opt) => {
+            if (dict.endianOptions[opt.value]) {
+              opt.textContent = dict.endianOptions[opt.value];
+            }
+          });
+          item.order.setAttribute("aria-label", `${dt.name} ${dict.input.orderAriaSuffix}`);
+          item.input.setAttribute("data-placeholder", dict.input.placeholder);
+          item.input.setAttribute("aria-label", `${dt.name} ${dict.input.inputAriaSuffix}`);
+          const triggerEl = item.row.querySelector(`[data-trigger="${dt.id}"]`);
+          if (triggerEl) {
+            triggerEl.setAttribute("title", dict.input.enterHintTitle);
+          }
+          item.copyBtn.setAttribute("title", dict.input.copyBtnTitle);
+          item.copyBtn.setAttribute("aria-label", dict.input.copyBtnTitle);
+
+          const cell = cellValues[dt.id];
+          if ((cell && cell.outOfRange) || item.input.classList.contains("out-of-range-val")) {
+            item.input.textContent = dict.status.outOfRange;
+          }
+        });
+
+        renderActiveStatus();
+
+        document.getElementById("drawerTag").textContent = dict.drawer.tag;
+        document.getElementById("drawerTitle").textContent = dict.drawer.title;
+        const closeBtn = document.getElementById("closeDrawerBtn");
+        closeBtn.setAttribute("title", dict.drawer.closeTitle);
+        closeBtn.setAttribute("aria-label", dict.drawer.closeAria);
+        document.getElementById("drawerBody").innerHTML = renderHelpMarkdown(helpMd);
+
+        document.getElementById("footerAuthorLabel").textContent = dict.footer.authorLabel;
+        document.getElementById("footerAuthorName").textContent = dict.footer.authorName;
+        document.getElementById("footerRepoLabel").textContent = dict.footer.repoLabel;
+        document.getElementById("footerCopyright").textContent = dict.footer.copyright;
+      }
 
       function copyTextToClipboard(text) {
         const ta = document.createElement("textarea");
@@ -1148,7 +1710,7 @@
         });
 
         inputEl.addEventListener("focus", () => {
-          if (inputEl.textContent.trim() === "超范围") {
+          if (inputEl.classList.contains("out-of-range-val") || isOutOfRangeText(inputEl.textContent)) {
             inputEl.textContent = "";
             inputEl.classList.remove("out-of-range-val");
           }
@@ -1168,7 +1730,13 @@
         orderEl.addEventListener("change", () => {
           if (!lastConversionValid) return;
           const cell = cellValues[dt.id];
-          if (!cell || !cell.valid || cell.outOfRange || inputEl.textContent.trim() === "超范围") {
+          if (
+            !cell ||
+            !cell.valid ||
+            cell.outOfRange ||
+            inputEl.classList.contains("out-of-range-val") ||
+            isOutOfRangeText(inputEl.textContent)
+          ) {
             return;
           }
           renderCellContent(dt.id);
@@ -1179,8 +1747,11 @@
         });
 
         copyBtnEl.addEventListener("click", () => {
+          if (inputEl.classList.contains("out-of-range-val") || isOutOfRangeText(inputEl.textContent)) {
+            return;
+          }
           const rawText = inputEl.textContent.replace(/\s+/g, "");
-          if (!rawText || rawText === "超范围") return;
+          if (!rawText) return;
 
           copyTextToClipboard(rawText);
 
@@ -1285,8 +1856,11 @@
       }
 
       function parseInputForType(rawStr, dt, pattern) {
+        if (isOutOfRangeText(rawStr)) {
+          return { valid: false };
+        }
         const str = rawStr.replace(/\s+/g, "");
-        if (!str || str === "超范围") {
+        if (!str || isOutOfRangeText(str)) {
           return { valid: false };
         }
 
@@ -1416,7 +1990,7 @@
         if (!cell || !cell.valid) return;
 
         if (cell.outOfRange) {
-          item.input.textContent = "超范围";
+          item.input.textContent = currentDict.status.outOfRange;
           item.input.classList.add("out-of-range-val");
           return;
         }
@@ -1507,6 +2081,8 @@
       }
 
       function clearStatuses() {
+        activeSourceId = null;
+        activeStatusKind = null;
         DATA_TYPES.forEach((dt) => {
           const item = rowElements[dt.id];
           item.row.classList.remove("active-row");
@@ -1521,6 +2097,7 @@
         const sourceItem = rowElements[sourceId];
         const sourceDt = sourceItem.def;
         sourceItem.row.classList.add("active-row");
+        activeSourceId = sourceId;
 
         const parsed = parseInputForType(
           sourceItem.input.textContent,
@@ -1530,19 +2107,15 @@
 
         if (!parsed.valid) {
           lastConversionValid = false;
+          activeStatusKind = "err";
           sourceItem.input.classList.add("input-error");
-          const errMsg = document.createElement("div");
-          errMsg.className = "status-msg status-err";
-          errMsg.textContent = `错误：${sourceDt.name} 量程应为 ${sourceDt.rangeLabel}`;
-          sourceItem.status.appendChild(errMsg);
+          renderActiveStatus();
           return;
         }
 
         lastConversionValid = true;
-        const okMsg = document.createElement("div");
-        okMsg.className = "status-msg status-ok";
-        okMsg.textContent = "转换完成";
-        sourceItem.status.appendChild(okMsg);
+        activeStatusKind = "ok";
+        renderActiveStatus();
 
         DATA_TYPES.forEach((targetDt) => {
           cellValues[targetDt.id] = computeTargetCell(parsed, targetDt);
@@ -1563,7 +2136,13 @@
         DATA_TYPES.forEach((dt) => {
           const targetItem = rowElements[dt.id];
           const cell = cellValues[dt.id];
-          if (!cell || !cell.valid || cell.outOfRange || targetItem.input.textContent.trim() === "超范围") {
+          if (
+            !cell ||
+            !cell.valid ||
+            cell.outOfRange ||
+            targetItem.input.classList.contains("out-of-range-val") ||
+            isOutOfRangeText(targetItem.input.textContent)
+          ) {
             return;
           }
           renderCellContent(dt.id);
@@ -1573,6 +2152,15 @@
       document.querySelectorAll(".radix-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           applyRadixChange(Number(btn.getAttribute("data-radix")));
+        });
+      });
+
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetLang = btn.getAttribute("data-lang");
+          if (targetLang && targetLang !== currentLang) {
+            setLanguage(targetLang);
+          }
         });
       });
 
@@ -1611,6 +2199,7 @@
 
       rowElements["uint8"].input.textContent = "200";
       handleConvertFrom("uint8");
+      setLanguage("zh-CN");
     })();
   </script>
 
