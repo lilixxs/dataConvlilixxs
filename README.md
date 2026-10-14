@@ -1,5 +1,7 @@
 # STM32 数据类型转换工具 (STM32 Data Type Converter)
 
+简体中文 | [English](./README.en.md)
+
 基于 Claude Code 浅色极简直角风格构建的 STM32 嵌入式数据类型在线转换工具。
 在线访问：<https://lilixxs.github.io/dataConvlilixxs/>
 
@@ -32,6 +34,7 @@
 - `i18n/help.zh-CN.md`：简体中文使用帮助（Markdown 格式）。
 - `i18n/help.en-US.md`：英文使用帮助（Markdown 格式）。
 - `claude_code_light_ui_style_guide.md`：UI 视觉规范参考文档。
+- `README.en.md`：英文项目说明文档。
 - `CONTRIBUTING.md`：贡献与多语言翻译维护指南。
 - `LICENSE`：MIT 开源协议文本。
 
