@@ -1,3 +1,39 @@
+# =============================================================================
+# .gitignore
+# 仅忽略本地与开发过程产物。项目运行所需文件保持跟踪。
+# =============================================================================
+
+# --- AI 提示词与 Agent 指令 / 规则文件 ---------------------------------------
+AGENTS.md
+CLAUDE.md
+claude_code_light_ui_style_guide.md
+*prompt*.md
+*prompt*.txt
+.opencode/
+opencode.json
+opencode.jsonc
+.claude/
+.cursor/
+.cursorrules
+.windsurf/
+.windsurfrules
+.aider*
+.github/copilot-instructions.md
+
+# --- 本地临时目录与截图 ------------------------------------------------------
 temp_images/
+tmp/
+temp/
+*.log
+
+# --- 编辑器与 IDE 配置 -------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- 操作系统生成文件 --------------------------------------------------------
 .DS_Store
 Thumbs.db
+Desktop.ini
