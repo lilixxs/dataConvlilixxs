@@ -17,7 +17,6 @@
 
 1. 在 `i18n/zh-CN.json` 与 `i18n/en-US.json` 中添加对应的翻译键，保持两个 JSON 文件的键结构完全一致。
 2. 在 `i18n/help.zh-CN.md` 与 `i18n/help.en-US.md` 中补充新功能的操作说明或转换规则。
-3. 将更新后的 JSON 与 Markdown 内容同步至 `lilixxsDataConv.html` 内的 `FALLBACK_I18N` 与 `FALLBACK_HELP_MD` 常量，确保 `file://` 离线双击打开模式与外部文件一致。
 
 ## 3. 新增语种流程
 
@@ -29,7 +28,6 @@
    ```html
    <button type="button" class="lang-btn" data-lang="ja-JP">日本語</button>
    ```
-4. 在 `FALLBACK_I18N` 与 `FALLBACK_HELP_MD` 中补充 `ja-JP` 回退数据。
 
 ## 4. 帮助文档 Markdown 语法规范
 

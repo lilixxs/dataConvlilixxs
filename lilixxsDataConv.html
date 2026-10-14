@@ -1071,280 +1071,18 @@
         { id: "double", name: "double", kind: "double", bits: 64, minFloat: -1.7976931348623157e+308, maxFloat: 1.7976931348623157e+308, rangeLabel: "±1.7977e+308" }
       ];
 
-      /* Built-in fallback dictionaries when opened directly via file:// protocol where fetch() is blocked by CORS */
-      const FALLBACK_I18N = {
-        "zh-CN": {
-          lang: "zh-CN",
-          pageTitle: "STM32 数据类型转换器",
-          terminalTag: ">_ STM32 DATA CONVERTER",
-          title: "STM32 数据类型转换工具",
-          subtitle: "支持多字节序（ABCD / CDAB 等）与 10/16/2 进制切换，16 进制与 2 进制按字节间隔显示且复制不含空格",
-          toolbar: {
-            radixGroupAria: "输出进制选择",
-            radix10: "10进制",
-            radix16: "十六进制",
-            radix2: "二进制",
-            clearBtn: "清空",
-            helpBtn: "使用帮助",
-            langGroupAria: "界面语言选择"
-          },
-          tableHeader: {
-            type: "数据类型",
-            range: "数值范围",
-            order: "字节序",
-            input: "数值输入 / 显示 (Enter)",
-            status: "状态提示"
-          },
-          sections: {
-            int: "INT · 有符号整型",
-            uint: "UINT · 无符号整型",
-            float: "FLOAT / DOUBLE · 浮点型"
-          },
-          types: {
-            int8: "8位有符号整型",
-            int16: "16位有符号整型",
-            int32: "32位有符号整型",
-            int64: "64位有符号整型",
-            uint8: "8位无符号整型",
-            uint16: "16位无符号整型",
-            uint32: "32位无符号整型",
-            uint64: "64位无符号整型",
-            float: "单精度浮点",
-            double: "双精度浮点"
-          },
-          rangeTitles: {
-            int32: "精确范围: -2,147,483,648 ~ 2,147,483,647",
-            int64: "精确范围: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807",
-            uint32: "精确范围: 0 ~ 4,294,967,295",
-            uint64: "精确范围: 0 ~ 18,446,744,073,709,551,615",
-            float: "精确范围: -3.4028235e+38 ~ 3.4028235e+38",
-            double: "精确范围: -1.7976931348623157e+308 ~ 1.7976931348623157e+308"
-          },
-          endianOptions: {
-            A: "A (单字节)",
-            AB: "AB (大端)",
-            BA: "BA (小端)",
-            ABCD: "ABCD (大端)",
-            DCBA: "DCBA (小端)",
-            BADC: "BADC (字节交换)",
-            CDAB: "CDAB (字交换)",
-            ABCDEFGH: "ABCDEFGH (大端)",
-            HGFEDCBA: "HGFEDCBA (小端)",
-            BADCFEHG: "BADCFEHG (字节交换)",
-            GHEFCDAB: "GHEFCDAB (字交换)",
-            EFGHABCD: "EFGHABCD (双字交换)"
-          },
-          input: {
-            placeholder: "输入数值并按回车...",
-            enterHintTitle: "按回车转换",
-            copyBtnTitle: "复制数值",
-            orderAriaSuffix: "字节序",
-            inputAriaSuffix: "数值输入"
-          },
-          status: {
-            outOfRange: "超范围",
-            ok: "转换完成",
-            errRange: "错误：{type} 量程应为 {range}"
-          },
-          drawer: {
-            tag: ">_ MANUAL & GUIDE",
-            title: "使用帮助与转换说明",
-            closeTitle: "关闭 (Esc)",
-            closeAria: "关闭帮助",
-            loading: "正在加载帮助文档..."
-          },
-          footer: {
-            authorLabel: "作者",
-            authorName: "lilixxs",
-            repoLabel: "GitHub 项目主页",
-            copyright: "Copyright © 2026 lilixxs · 基于 MIT 协议开源"
-          }
-        },
-        "en-US": {
-          lang: "en-US",
-          pageTitle: "STM32 Data Type Converter",
-          terminalTag: ">_ STM32 DATA CONVERTER",
-          title: "STM32 Data Type Converter",
-          subtitle: "Multi-endianness (ABCD / CDAB, etc.) & Dec/Hex/Bin conversion with byte-spaced display and space-free copy",
-          toolbar: {
-            radixGroupAria: "Output radix selection",
-            radix10: "DEC",
-            radix16: "HEX",
-            radix2: "BIN",
-            clearBtn: "Clear",
-            helpBtn: "Manual",
-            langGroupAria: "Interface language selection"
-          },
-          tableHeader: {
-            type: "Data Type",
-            range: "Value Range",
-            order: "Endianness",
-            input: "Value Input / Display (Enter)",
-            status: "Status"
-          },
-          sections: {
-            int: "INT · Signed Integer",
-            uint: "UINT · Unsigned Integer",
-            float: "FLOAT / DOUBLE · Floating-Point"
-          },
-          types: {
-            int8: "8-bit signed int",
-            int16: "16-bit signed int",
-            int32: "32-bit signed int",
-            int64: "64-bit signed int",
-            uint8: "8-bit unsigned int",
-            uint16: "16-bit unsigned int",
-            uint32: "32-bit unsigned int",
-            uint64: "64-bit unsigned int",
-            float: "Single-precision float",
-            double: "Double-precision float"
-          },
-          rangeTitles: {
-            int32: "Exact range: -2,147,483,648 ~ 2,147,483,647",
-            int64: "Exact range: -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807",
-            uint32: "Exact range: 0 ~ 4,294,967,295",
-            uint64: "Exact range: 0 ~ 18,446,744,073,709,551,615",
-            float: "Exact range: -3.4028235e+38 ~ 3.4028235e+38",
-            double: "Exact range: -1.7976931348623157e+308 ~ 1.7976931348623157e+308"
-          },
-          endianOptions: {
-            A: "A (1-Byte)",
-            AB: "AB (Big-Endian)",
-            BA: "BA (Little-Endian)",
-            ABCD: "ABCD (Big-Endian)",
-            DCBA: "DCBA (Little-Endian)",
-            BADC: "BADC (Byte Swap)",
-            CDAB: "CDAB (Word Swap)",
-            ABCDEFGH: "ABCDEFGH (Big-Endian)",
-            HGFEDCBA: "HGFEDCBA (Little-Endian)",
-            BADCFEHG: "BADCFEHG (Byte Swap)",
-            GHEFCDAB: "GHEFCDAB (Word Swap)",
-            EFGHABCD: "EFGHABCD (DWord Swap)"
-          },
-          input: {
-            placeholder: "Enter value & press Enter...",
-            enterHintTitle: "Press Enter to convert",
-            copyBtnTitle: "Copy value",
-            orderAriaSuffix: "endianness",
-            inputAriaSuffix: "value input"
-          },
-          status: {
-            outOfRange: "Out of range",
-            ok: "Converted",
-            errRange: "Error: {type} range is {range}"
-          },
-          drawer: {
-            tag: ">_ MANUAL & GUIDE",
-            title: "User Manual & Conversion Guide",
-            closeTitle: "Close (Esc)",
-            closeAria: "Close manual",
-            loading: "Loading manual..."
-          },
-          footer: {
-            authorLabel: "Author",
-            authorName: "lilixxs",
-            repoLabel: "GitHub Repository",
-            copyright: "Copyright © 2026 lilixxs · Released under the MIT License"
-          }
-        }
-      };
-
-      const FALLBACK_HELP_MD = {
-        "zh-CN": [
-          "## 01 快速输入与触发转换",
-          "",
-          "- **任意行输入：**在任一数据类型框中输入数值。",
-          "- **一键触发：**按 `Enter` 键或点击右侧 `↵` 图标。",
-          "- **全量同步：**自动计算并更新其余 9 种数据类型。",
-          "",
-          "> // 支持直接输入以下 3 种格式（不区分大小写）",
-          "| 格式类型 | 示例 |",
-          "| :--- | :--- |",
-          "| 十进制 / 科学计数 | `200` `-32768` `3.14e-2` |",
-          "| 十六进制 (0x前缀) | `0x12345678` `0xFF` |",
-          "| 二进制 (0b前缀) | `0b11001000` `0b0101` |",
-          "",
-          "## 02 字节序（Endianness）图解",
-          "",
-          "- **字节编号：**标准大端序（高字节在前）依次记为 **A, B, C, D...**",
-          "- **独立切换：**每行可单独选择字节序，实时重排当前行显示结果。",
-          "- **适用场景：**方便 Modbus 寄存器或 STM32 大小端跨设备调试。",
-          "",
-          "> // 以 32 位数值 0x12345678 为例：",
-          "| 字节序模式 | 字节排列 |",
-          "| :--- | :--- |",
-          "| ABCD (大端) | `A:12` `B:34` `C:56` `D:78` |",
-          "| DCBA (小端) | `D:78` `C:56` `B:34` `A:12` |",
-          "| BADC (字节交换) | `B:34` `A:12` `D:78` `C:56` |",
-          "| CDAB (字交换) | `C:56` `D:78` `A:12` `B:34` |",
-          "",
-          "## 03 视觉分块与无空格复制",
-          "",
-          "- **按字节留白：**16 进制与 2 进制下，每字节自动间隔显示以便阅读。",
-          "- **一键无空格复制：**点击输入框右侧 `[COPY_ICON]` 复制图标（或划选复制）会自动剔除间隔并显示 `[OK_MARK]`，可直接粘贴至代码中。",
-          "",
-          "> COPY_DEMO: 界面显示: 0x12 34 56 78 | ──复制──► | 0x12345678",
-          "",
-          "## 04 STM32 转换与量程规范",
-          "",
-          "- **浮点转整型：**遵循 C 标准向零截断",
-          "  SUB: 例：`12.9 → 12`，`-12.9 → -12`",
-          "- **目标超范围：**源数值超出目标类型量程时提示 `[WARN:超范围]`",
-          "  SUB: 例：输入 `uint8 = 200` 时，`int8` 显示超范围",
-          "- **源输入越界：**输入值超出当前行量程时，右侧状态栏标红报错",
-          "  SUB: 报错或超范围状态下切换进制，不会触发错误转换"
-        ].join("\n"),
-        "en-US": [
-          "## 01 Quick Input & Conversion Trigger",
-          "",
-          "- **Enter in any row:** Type a value in any data type box.",
-          "- **Trigger conversion:** Press `Enter` or click the `↵` icon on the right.",
-          "- **Sync all types:** Compute and update the other 9 data types automatically.",
-          "",
-          "> // Supports 3 input formats (case-insensitive)",
-          "| Format | Examples |",
-          "| :--- | :--- |",
-          "| Decimal / Scientific | `200` `-32768` `3.14e-2` |",
-          "| Hexadecimal (0x prefix) | `0x12345678` `0xFF` |",
-          "| Binary (0b prefix) | `0b11001000` `0b0101` |",
-          "",
-          "## 02 Endianness Diagram",
-          "",
-          "- **Byte labels:** Canonical Big-Endian (MSB first) labels bytes as **A, B, C, D...**",
-          "- **Per-row selection:** Select endianness independently on each row to reorder its display immediately.",
-          "- **Use case:** Debug Modbus registers or cross-device STM32 byte ordering.",
-          "",
-          "> // Example for 32-bit value 0x12345678:",
-          "| Endianness | Byte Order |",
-          "| :--- | :--- |",
-          "| ABCD (Big-Endian) | `A:12` `B:34` `C:56` `D:78` |",
-          "| DCBA (Little-Endian) | `D:78` `C:56` `B:34` `A:12` |",
-          "| BADC (Byte Swap) | `B:34` `A:12` `D:78` `C:56` |",
-          "| CDAB (Word Swap) | `C:56` `D:78` `A:12` `B:34` |",
-          "",
-          "## 03 Visual Byte Spacing & Space-Free Copy",
-          "",
-          "- **Byte spacing:** Hex and Binary modes insert visual margins between bytes for readability.",
-          "- **Space-free copy:** Click the `[COPY_ICON]` button (or select and copy) to strip visual gaps and show `[OK_MARK]`, ready to paste into C code.",
-          "",
-          "> COPY_DEMO: Display: 0x12 34 56 78 | ──Copy──► | 0x12345678",
-          "",
-          "## 04 STM32 Conversion & Range Rules",
-          "",
-          "- **Float to integer:** Truncates toward zero per C standard",
-          "  SUB: Example: `12.9 → 12`, `-12.9 → -12`",
-          "- **Target overflow:** Displays `[WARN:Out of range]` when the source value exceeds the target range",
-          "  SUB: Example: When `uint8 = 200`, `int8` shows Out of range",
-          "- **Source out of bounds:** Highlights the status cell in red when the input exceeds the row range",
-          "  SUB: Switching radix during an error or overflow state never triggers an invalid conversion"
-        ].join("\n")
-      };
-
       const buf8 = new ArrayBuffer(8);
       const view8 = new DataView(buf8);
       let currentRadix = 10;
       let currentLang = "zh-CN";
-      let currentDict = FALLBACK_I18N["zh-CN"];
+      /* Minimal status defaults; all UI text is loaded from ./i18n/<lang>.json at runtime */
+      let currentDict = {
+        status: {
+          outOfRange: "超范围",
+          ok: "转换完成",
+          errRange: "错误：{type} 量程应为 {range}"
+        }
+      };
       let lastConversionValid = false;
       let activeSourceId = null;
       let activeStatusKind = null;
@@ -1533,6 +1271,7 @@
           .join("");
       }
 
+      /* All dictionaries and help documents live in external ./i18n files; nothing is bundled inline. */
       async function fetchLocaleData(lang) {
         if (!localeCache[lang]) {
           try {
@@ -1541,10 +1280,7 @@
               localeCache[lang] = await res.json();
             }
           } catch (e) {
-            /* Fallback used when opened via file:// */
-          }
-          if (!localeCache[lang]) {
-            localeCache[lang] = FALLBACK_I18N[lang] || FALLBACK_I18N["zh-CN"];
+            /* No inline fallback: the external file is the single source of truth */
           }
         }
 
@@ -1555,10 +1291,7 @@
               helpCache[lang] = await res.text();
             }
           } catch (e) {
-            /* Fallback used when opened via file:// */
-          }
-          if (!helpCache[lang]) {
-            helpCache[lang] = FALLBACK_HELP_MD[lang] || FALLBACK_HELP_MD["zh-CN"];
+            /* No inline fallback: the external file is the single source of truth */
           }
         }
 
@@ -1590,6 +1323,17 @@
         });
 
         const { dict, helpMd } = await fetchLocaleData(lang);
+
+        if (helpMd) {
+          document.getElementById("drawerBody").innerHTML = renderHelpMarkdown(helpMd);
+        } else if (dict && dict.drawer && dict.drawer.loading) {
+          document.getElementById("drawerBody").textContent = dict.drawer.loading;
+        }
+
+        if (!dict) {
+          return;
+        }
+
         currentDict = dict;
 
         document.documentElement.lang = dict.lang;
@@ -1654,8 +1398,6 @@
         const closeBtn = document.getElementById("closeDrawerBtn");
         closeBtn.setAttribute("title", dict.drawer.closeTitle);
         closeBtn.setAttribute("aria-label", dict.drawer.closeAria);
-        document.getElementById("drawerBody").innerHTML = renderHelpMarkdown(helpMd);
-
         document.getElementById("footerAuthorLabel").textContent = dict.footer.authorLabel;
         document.getElementById("footerAuthorName").textContent = dict.footer.authorName;
         document.getElementById("footerRepoLabel").textContent = dict.footer.repoLabel;

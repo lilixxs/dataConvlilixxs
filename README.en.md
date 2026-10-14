@@ -34,7 +34,7 @@ Open the live demo at <https://lilixxs.github.io/dataConvlilixxs/>.
 
 ## Directory Structure
 
-- `lilixxsDataConv.html`: The main application page. It holds the UI layout, the conversion logic, the i18n loader and the inline fallback dictionary.
+- `lilixxsDataConv.html`: The main application page. It holds the UI layout, the conversion logic and the i18n loader. The page reads the external language files and help documents from the `i18n/` directory over HTTP `fetch`.
 - `index.html`: The redirect entry for the GitHub Pages root path.
 - `i18n/zh-CN.json`: The Simplified Chinese UI language file.
 - `i18n/en-US.json`: The English UI language file.
@@ -48,15 +48,14 @@ Open the live demo at <https://lilixxs.github.io/dataConvlilixxs/>.
 
 ## Local Development
 
-Start a local static server. The server loads the external language files and the Markdown help files from the `i18n/` directory over HTTP.
+The page reads the external language files and the Markdown help documents from the `i18n/` directory over HTTP `fetch`.
+Start a local static server before you preview the page.
 
 ```bash
 python -m http.server 8000
 ```
 
 Then open `http://localhost:8000/lilixxsDataConv.html` in a browser.
-
-If you open `lilixxsDataConv.html` directly with the `file://` protocol, the page enables the built-in fallback language file. The external `i18n/` files do not load in this mode.
 
 ## Contributing & i18n Maintenance
 

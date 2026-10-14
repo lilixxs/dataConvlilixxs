@@ -5,7 +5,7 @@
 本仓库托管部署于 GitHub Pages 的纯静态单页应用（STM32 数据类型转换器）。
 本仓库不使用包管理器、构建工具或外部运行依赖。
 
-- `lilixxsDataConv.html`：应用主文件，包含 HTML 结构、CSS 样式、数值转换逻辑与多语言加载器。
+- `lilixxsDataConv.html`：应用主文件，包含 HTML 结构、CSS 样式、数值转换逻辑与多语言加载器。页面通过 HTTP `fetch` 直接读取外部 `i18n/*.json` 与 `i18n/help.*.md` 文件。
 - `index.html`：GitHub Pages 根路径入口文件，自动重定向至 `./lilixxsDataConv.html`。
 - `i18n/zh-CN.json`、`i18n/en-US.json`：中英文界面翻译文本（外部 JSON 文件）。
 - `i18n/help.zh-CN.md`、`i18n/help.en-US.md`：中英文使用帮助文档（外部 Markdown 文件）。
@@ -26,11 +26,11 @@
 1. **同步更新外部多语言与帮助文件**：
    - 所有界面文案存储在 `i18n/zh-CN.json` 与 `i18n/en-US.json`。
    - 所有使用帮助内容存储在 `i18n/help.zh-CN.md` 与 `i18n/help.en-US.md`。
-   - 今后添加新功能或修改文案时，必须同步更新上述外部 JSON 与 Markdown 文件，并同步更新 `lilixxsDataConv.html` 中的 `FALLBACK_I18N` 与 `FALLBACK_HELP_MD` 离线回退常量。
+   - 今后添加新功能或修改文案时，只需同步更新上述外部 JSON 与 Markdown 文件。页面通过 HTTP `fetch` 直接读取这些外部文件。
 2. **保持零外部依赖**：禁止引入外部 CSS、JS 框架或字体 CDN。
 3. **保持 `contenteditable` 输入契约**：所有 `.type-input` 元素使用 `<div contenteditable="true">`。初始化脚本通过 `Object.defineProperty(inputEl, "value", ...)` 挂载 `.value` 属性，读取 `.value` 时自动剔除全部空白字符。
 4. **保持按字节视觉留白与无空格复制**：
-   - 16 进制与 2 进制渲染将每个字节包裹在 `<span class="byte-chunk">` 内，仅通过 CSS 规则 `.byte-chunk + .byte-chunk { margin-left: 0.55em; }` 产生视觉间距。
+   - 16 进制与 2 进制渲染将每个字节包裹在 `<span class="byte-chunk">` 内，仅通过 CSS 规则 `.byte-chunk + .byte-chunk { margin-left: 0.55em }` 产生视觉间距。
    - 禁止在 DOM 文本节点中插入空格字符。划选复制事件（`copy`）与复制按钮（`.copy-btn`）必须输出无空格连续字符串（如 `0x12345678`）。
 5. **保持数值转换与字节序算法**：
    - `int64` 与 `uint64` 使用 `BigInt` 运算，防止超出 IEEE 754 双精度安全整数范围时丢失精度。

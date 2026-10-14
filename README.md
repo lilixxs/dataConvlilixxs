@@ -27,7 +27,7 @@
 
 ## 目录结构
 
-- `lilixxsDataConv.html`：应用主页面（包含 UI 布局、转换逻辑、多语言加载器与内联回退字典）。
+- `lilixxsDataConv.html`：应用主页面（包含 UI 布局、转换逻辑与多语言加载器）。页面通过 HTTP `fetch` 从 `i18n/` 目录读取外部语言包与帮助文档。
 - `index.html`：GitHub Pages 根路径重定向入口。
 - `i18n/zh-CN.json`：简体中文界面语言包。
 - `i18n/en-US.json`：英文界面语言包。
@@ -40,14 +40,14 @@
 
 ## 本地运行
 
-推荐使用本地静态服务器启动项目，以便通过 HTTP 加载 `i18n/` 目录下的外部语言包与 Markdown 帮助文件：
+页面通过 HTTP `fetch` 直接读取 `i18n/` 目录下的外部语言包与 Markdown 帮助文档。
+本地预览需先启动 HTTP 静态服务器：
 
 ```bash
 python -m http.server 8000
 ```
 
 在浏览器访问 `http://localhost:8000/lilixxsDataConv.html`。
-若直接通过 `file://` 协议双击打开 `lilixxsDataConv.html`，页面会自动启用内置回退语言包。
 
 ## 贡献与多语言维护
 
